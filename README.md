@@ -27,6 +27,7 @@ A production-ready, end-to-end **Enterprise DevOps CI/CD Pipeline** implementati
   - [Phase 4: Monitoring & Observability](#phase-4-monitoring--observability)
 - [Prerequisites](#-prerequisites)
 - [Verification & Testing](#-verification--testing)
+- [Pipeline Execution Screenshots & Verification](#-pipeline-execution-screenshots--verification)
 - [License](#-license)
 
 ---
@@ -135,6 +136,13 @@ The Jenkins Pipeline (`Jenkinsfile`) automates 13 distinct stages:
 
 ```directory
 .
+├── Boardgame/                    # Spring Boot Java Application Source Code
+│   ├── .github/workflows/        # CI workflow definitions
+│   ├── src/                      # Java application source code, controllers & templates
+│   ├── Dockerfile                # Multi-stage Docker containerization build
+│   ├── Jenkinsfile               # Declarative Jenkins CI/CD pipeline script
+│   ├── deployment-service.yaml   # Kubernetes Deployment & Service manifests
+│   └── pom.xml                   # Maven dependencies and build definitions
 ├── PHASE-1/                      # Infrastructure & Core Services Setup
 │   ├── 1. Create_VM.md           # AWS EC2 Instance Creation Guide (Ubuntu)
 │   ├── 2. K8-Setup.md            # Kubernetes 1.28.1 Cluster Setup (kubeadm, Calico, Ingress)
@@ -145,8 +153,18 @@ The Jenkins Pipeline (`Jenkinsfile`) automates 13 distinct stages:
 │   └── Git-Repo-Setup.md         # Git Private Repository, Personal Access Token (PAT) Setup
 ├── PHASE-3/                      # Continuous Integration & Delivery Pipeline
 │   └── CICD.md                   # Required Jenkins Plugins & Declarative Jenkinsfile Pipeline Code
-└── PHASE-4/                      # Observability & System Health
-    └── Monitor.md                # Download Links & Installation Guides for Prometheus & Grafana
+├── PHASE-4/                      # Observability & System Health
+│   └── Monitor.md                # Download Links & Installation Guides for Prometheus & Grafana
+└── screenshots/                  # Live Pipeline Execution & Monitoring Screenshots
+    ├── pipeline overview of all stages.png
+    ├── jenkins pipeline done photo.png
+    ├── sonar qube error photo.png
+    ├── Nexus photo.png
+    ├── Prometheus.png
+    ├── prometheus adding what to monitor.png
+    ├── Black_box_exporter.png
+    ├── Grafana.png
+    └── Monitoring using grafana blackbox and prometheus.png
 ```
 
 ---
@@ -257,6 +275,73 @@ To verify the successful execution of the pipeline:
    kubectl get svc -n webapps
    ```
 5. **Grafana Dashboard**: Open `http://<GRAFANA_IP>:3000` and view metrics graphs for system resources.
+
+---
+
+## 📸 Pipeline Execution Screenshots & Verification
+
+Below are real-world execution screenshots demonstrating the automated CI/CD pipeline, security scans, artifact storage, and observability stack in operation:
+
+### 1. Jenkins End-to-End Pipeline Stages Overview
+Complete visualization of all 14 stages executing successfully in sequence (Tool Install, Git Checkout, Compile, Test, File System Scan, SonarQube Analysis, Quality Gate, Build, Publish to Nexus, Build Docker Image, Docker Image Scan, Push Docker Image, Deploy to Kubernetes, and Post Actions):
+
+![Pipeline Stages Overview](screenshots/pipeline%20overview%20of%20all%20stages.png)
+
+---
+
+### 2. Jenkins Build Completion & Automated Email Notification
+Console log output verifying successful build completion (`Finished: SUCCESS`) and automated HTML status email dispatch with Trivy security audit report attached:
+
+![Jenkins Build Done](screenshots/jenkins%20pipeline%20done%20photo.png)
+
+---
+
+### 3. SonarQube Code Quality & Security Analysis
+SonarQube dashboard showing static code analysis, vulnerability scan metrics, code duplication checks, and Quality Gate evaluation:
+
+![SonarQube Analysis](screenshots/sonar%20qube%20error%20photo.png)
+
+---
+
+### 4. Sonatype Nexus Artifact Repository Manager
+Sonatype Nexus 3 repository dashboard hosting built binary artifacts across `maven-releases` and `maven-snapshots`:
+
+![Nexus Repository](screenshots/Nexus%20photo.png)
+
+---
+
+### 5. Prometheus Scrape Targets Health Status
+Prometheus target health interface confirming that both the `blackbox` HTTP probing exporter and internal `prometheus` metric endpoints are healthy (`UP`):
+
+![Prometheus Targets](screenshots/prometheus%20adding%20what%20to%20monitor.png)
+
+---
+
+### 6. Prometheus Expression Browser
+Prometheus Web UI for ad-hoc querying, time-series analysis, and evaluating metrics scraped from cluster nodes:
+
+![Prometheus Query UI](screenshots/Prometheus.png)
+
+---
+
+### 7. Blackbox Exporter Probing Interface
+Blackbox Exporter web console probing application endpoints and HTTP health checks across deployed services:
+
+![Blackbox Exporter](screenshots/Black_box_exporter.png)
+
+---
+
+### 8. Grafana Observability Dashboard
+Grafana monitoring portal connected to Prometheus as the primary data source for visual telemetry:
+
+![Grafana Welcome](screenshots/Grafana.png)
+
+---
+
+### 9. Grafana & Blackbox HTTP Monitoring Dashboard
+Live Grafana dashboard displaying Blackbox Exporter HTTP probing results, endpoint uptime status (`UP` / `DOWN`), SSL certificate expiry, and latency duration graphs:
+
+![Grafana Blackbox Monitoring](screenshots/Monitoring%20using%20grafana%20blackbox%20and%20prometheus.png)
 
 ---
 
