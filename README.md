@@ -344,7 +344,3 @@ Live Grafana dashboard displaying Blackbox Exporter HTTP probing results, endpoi
 ![Grafana Blackbox Monitoring](screenshots/Monitoring%20using%20grafana%20blackbox%20and%20prometheus.png)
 
 ---
-
-## 📝 License & Acknowledgments
-
-This project is created for educational and professional demonstration purposes in enterprise DevOps practices. Feel free to fork, adapt, and use it in your own infrastructure automation workflows.
